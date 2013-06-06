@@ -1,32 +1,42 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 require 'rubygems'
+require 'yaml'
 require 'twitter'
 
-APP_CONF = YAML.load(File.open "#{Dir.pwd}/../config.config.yml"
+APP_CONF = YAML.load(File.open(File.expand_path("#{Dir.pwd}/../config/config.yml")))
 
 Twitter.configure do |config|
-  config.consumer_key = APP_CONF[:twitter][:consumer_key]
-  config.consumer_secret = APP_CONF[:twitter][:consumer_secret]
-  config.oauth_token = APP_CONF[:twitter][:oauth_token]
-  config.oauth_token_secret = APP_CONF[:twitter][:oauth_token_secret]
+  tw_conf = APP_CONF['twitter']
+  config.consumer_key = tw_conf[:consumer_key]
+  config.consumer_secret = tw_conf[:consumer_secret]
+  config.oauth_token = tw_conf[:oauth_token]
+  config.oauth_token_secret = tw_conf[:oauth_token_secret]
+end
+
+def quote
+  "#quotd #{`fortune -c -n 105 -s`.sub(/^\((.*)\)\s*$/, '[\\1]->').gsub(/[%\t\n\r]/, ' ').squeeze(' ')}"
 end
 
 #Twitter.configure { |c| puts c.to_yaml }
 last_id = 1
-quote = "#quotd #{`fortune -c -n 105 -s`.sub(/^\((.*)\)\s*$/, '[\\1]->').gsub(/[%\t\n\r]/, ' ').squeeze(' ')}"
 #puts quote
-Twitter.update(quote)
-while false
-  timeline = Twitter.user_timeline( :friends, :since_id => last_id )
+#Twitter.update(quote)
+while true
+  timeline = Twitter.home_timeline( :since_id => last_id )
 
   unless timeline.empty?
     last_id = timeline[0].id
-
-    timeline.reverse.each do|st|
-      puts "#{st.user.name} said #{st.text}"
+    request = []
+    timeline.reverse.each do |st|
+      requests = st.hashtags.select { |ht| ht.text == 'quotd' }
+      unless request.empty?
+        tweet = "@#{st.user.name} #{quote}"
+        puts tweet
+        Twitter.update tweet
+      end
     end
-
-    sleep 300
   end
-end
+  sleep 300
+  end
+
