@@ -138,7 +138,7 @@ class TweetMotd
           @quotes.push quote
           text = quote.get
           @logger.info "#{text.length}: #{text}"
-          chunk = split_text text
+          chunks = split_text text
           for chunk in chunks
             @client.update(chunk)
           end
