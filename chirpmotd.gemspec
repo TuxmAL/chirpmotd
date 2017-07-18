@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = 'tuxmal@gmail.com'
   s.files       = ["lib/chirp_motd.rb", "config/config.json", "lib/modules/fortune_quote.rb", "lib/modules/bofh_quote.rb", "lib/modules/doah_quote.rb", "lib/modules/bofh2_quote.rb", "lib/modules/advertise_me.rb", "bin/chirpmotd", "bin/cron_chirpmotd", "log/.gitignore"]
   s.homepage    = 'http://rubygems.org/gems/twitmotd'
-  s.license       = 'MIT'
+  s.license       = 'GPL V3'
   s.requirements << 'twitter'
   s.requirements << 'logger'
   s.requirements << 'yaml'

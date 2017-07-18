@@ -1,6 +1,6 @@
 # ChirpMotd
 
-## Simple modular tweeting account app in Ruby ##
+## Simple modular tweeting app in Ruby ##
 
 All the work is in progress now.
 
