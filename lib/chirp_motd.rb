@@ -12,22 +12,24 @@ Dir[__dir__ + '/modules/*.rb'].each {|file| require_relative file}
 
 module ChirpQuote
   class ChirpMotd
+    MAX_DIGIT = 5
+
     def initialize
-      log_filename = "#{File.expand_path("#{File.dirname(__FILE__)}/../log")}/#{__FILE__}.log"
-      config_filename = "#{File.expand_path("#{File.dirname(__FILE__)}/../config/config.json"}"
-      @logger.progname = __FILE__
+      log_filename = File.expand_path("#{__dir__}/../log/#{__FILE__}.log")
+      config_filename = File.expand_path("#{__dir__}/../config/config.json")
       @logger = Logger.new(log_filename, 10, 1_024_000)
+      @logger.progname = __FILE__
       @logger.level = Logger::INFO
 
       service_uri = URI('http://tuxmal.loc:9292/')
 
       # Selecting only classes from modules
       modules = ChirpQuote.constants.select do |c|
-        ChirpQuote.const_get(c).is_a? Class 
+        ChirpQuote.const_get(c).is_a? Class
       end
-      modules.delete self.to_sym
+      modules.delete self.class.name.split('::').last.to_sym
       @quotes = []
-      modules.each each do |c|
+      modules.each do |c|
         # AdvertiseMe needs another URI (as string)
         uri = (c != :AdvertiseMe)? service_uri : 'https://tuxmal.noip.me/'
         @quotes << ChirpQuote.const_get(c).new(uri, @logger)
@@ -77,15 +79,16 @@ module ChirpQuote
     def cron_run
       begin
         if (@quotes.length > 0)
-          open('/var/lib/quotd.idx', "w+") do |f|
-            idx = (f.readline).atoi % @quotes.length
+          open('/var/lib/chirpmotd.idx', File::CREAT|File::RDWR) do |f|
+            idx = (f.read(MAX_DIGIT)).to_i % @quotes.length
             quote = @quotes[idx]
             text = quote.get
             @logger.info "#{text.length}: #{text}"
             chunks = split_text text
             chunks.each {|chunk| @client.update(chunk)}
             f.rewind
-            f.write "#{idx++}"
+            idx += 1
+            f.write idx
           end
         end
       rescue StandardError => e
