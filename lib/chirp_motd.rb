@@ -8,6 +8,7 @@ require 'logger'
 require 'yaml'
 require 'twitter'
 
+require_relative 'version.rb'
 Dir[__dir__ + '/modules/*.rb'].each {|file| require_relative file}
 
 module ChirpQuote
@@ -21,7 +22,7 @@ module ChirpQuote
       @logger.progname = __FILE__
       @logger.level = Logger::INFO
 
-      service_uri = URI('http://tuxmal.loc:9292/')
+      @logger.info "# version #{version}; ChirpQuote::VERSION #{ChirpQuote::VERSION}"
 
       # Selecting only classes from modules
       modules = ChirpQuote.constants.select do |c|

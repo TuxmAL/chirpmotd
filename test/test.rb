@@ -8,6 +8,7 @@ require 'logger'
 require 'yaml'
 require_relative 'twitter_mock'
 
+require_relative '../lib/version.rb'
 Dir['../lib/modules/*.rb'].each {|file| require_relative(file)}
 
 module ChirpQuote

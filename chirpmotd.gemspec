@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'chirp_motd'
-  s.version     = '1.0.0'
+  s.version     = '0.1.0'
   s.executables << 'chirpmotd'
   s.excutables << 'cron_chirpmotd'
   s.date        = '2017-07-15'
