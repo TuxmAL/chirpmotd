@@ -1,4 +1,5 @@
 {
+  "service_uri": "<URI service>",
   "twitter": {
     "consumer_key": "<consumer key>",
     "consumer_secret": "<consumer secret>",

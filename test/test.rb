@@ -22,7 +22,23 @@ module ChirpQuote
       @logger.progname = __FILE__
       @logger.level = Logger::DEBUG
 
-      service_uri = URI('http://tuxmal.loc:9292/')
+      @logger.info "# version #{version}; ChirpQuote::VERSION #{ChirpQuote::VERSION}"
+
+      begin
+        app_conf = JSON.load(File.open(config_filename))
+        service_uri = URI(app_conf['service_uri'])
+
+        @client = Twitter::REST::Client.new do |config|
+          tw_conf = app_conf['twitter']
+          config.consumer_key = tw_conf['consumer_key']
+          config.consumer_secret = tw_conf['consumer_secret']
+          config.access_token = tw_conf['oauth_token']
+          config.access_token_secret = tw_conf['oauth_token_secret']
+        end
+      rescue StandardError => e
+        @logger.error e.message
+        @logger.error e.backtrace
+      end
 
       # Selecting only classes from modules
       modules = ChirpQuote.constants.select do |c|
@@ -37,19 +53,6 @@ module ChirpQuote
         @logger.debug "# instantiating module #{c}..."
         # AdvertiseMe needs another URI (as string)
         @quotes << ChirpQuote.const_get(c).new(uri, @logger)
-      end
-      begin
-        app_conf = JSON.load(File.open(config_filename))
-        @client = Twitter::REST::Client.new do |config|
-          tw_conf = app_conf['twitter']
-          config.consumer_key = tw_conf['consumer_key']
-          config.consumer_secret = tw_conf['consumer_secret']
-          config.access_token = tw_conf['oauth_token']
-          config.access_token_secret = tw_conf['oauth_token_secret']
-        end
-      rescue StandardError => e
-        @logger.error e.message
-        @logger.error e.backtrace
       end
     end
 
