@@ -36,7 +36,6 @@ module ChirpQuote
       modules.each do |c|
         @logger.debug "# instantiating module #{c}..."
         # AdvertiseMe needs another URI (as string)
-        uri = (c != :AdvertiseMe)? service_uri : 'https://tuxmal.noip.me/'
         @quotes << ChirpQuote.const_get(c).new(uri, @logger)
       end
       begin
