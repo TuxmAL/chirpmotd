@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.files      += Dir["lib/modules/*.rb"]
   s.files      += Dir["bin/*"]
   s.homepage    = 'http://rubygems.org/gems/chirpmotd'
-  s.license     = 'GPL V3'
+  s.license     = 'GPL-3.0'
   s.requirements << 'twitter'
   s.requirements << 'logger'
   s.requirements << 'yaml'
