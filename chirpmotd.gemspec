@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.description = 'Una piccola gem per installare il servizio che permette di inviare tramite un account twitter delle citazioni. Le citazioni sono ottenute tramite un microservice ed inviate 1 al giorno per ciascun microservizio registrato.'
   s.authors     = ['TuxmAL']
   s.email       = 'tuxmal@gmail.com'
-  s.files       = ["lib/chirp_motd.rb", "config/config.json", "log/.gitignore"]
+  s.files       = ["lib/chirp_motd.rb", "lib/version.rb", "config/config.json", "log/.gitignore"]
   s.files      += Dir["lib/modules/*.rb"]
   s.files      += Dir["bin/*"]
   s.homepage    = 'http://rubygems.org/gems/chirpmotd'
