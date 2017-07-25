@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.name        = 'chirp_motd'
   s.version     = '0.1.0'
   s.executables << 'chirpmotd'
-  s.excutables << 'cron_chirpmotd'
+  s.executables << 'cron_chirpmotd'
   s.date        = '2017-07-15'
   s.summary     = 'Invia su twitter citazioni, a tempo.'
   s.description = 'Una piccola gem per installare il servizio che permette di inviare tramite un account twitter delle citazioni. Le citazioni sono ottenute tramite un microservice ed inviate 1 al giorno per ciascun microservizio registrato.'
