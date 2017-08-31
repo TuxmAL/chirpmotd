@@ -92,7 +92,7 @@ module ChirpQuote
     def cron_run
       begin
         if (@quotes.length > 0)
-          open('/var/lib/chirpmotd.idx', File::CREAT|File::RDWR) do |f|
+          open('/var/lib/chirpmotd/chirpmotd.idx', File::CREAT|File::RDWR) do |f|
             idx = (f.read(MAX_DIGIT)).to_i % @quotes.length
             quote = @quotes[idx]
             text = quote.get
