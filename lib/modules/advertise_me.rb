@@ -9,7 +9,7 @@ module ChirpQuote
     def get
       begin
         @logger.info "#{self.class}: advertising #{@uri} and @TuxmAL"
-          return "Service powered by Raspberry Pi + Raspbian and hosted at #{@uri}\nFeel free to contact my master @TuxmAL!"
+          return "￼A @TuxmAL service powered by Raspberry Pi + Raspbian hosted at #{@uri}\nFeel free to contact me!"
       rescue StandardError => e
         @logger.error e.message
         @logger.error e.backtrace
