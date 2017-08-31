@@ -112,6 +112,49 @@ module ChirpQuote
       end
     end
 
+    def stdin_run(idx = nil)
+      begin
+        if (@quotes.length > 0)
+          if idx.nil?
+            open('/var/lib/chirpmotd/chirpmotd.idx', File::CREAT|File::RDWR) do |f|
+              idx = (f.read(MAX_DIGIT)).to_i % @quotes.length if idx.nil?
+              f.rewind
+              f.write idx + 1
+            end
+          end
+          quote = @quotes[idx]
+          text = quote.get
+          @logger.info "#{text.length}: #{text}"
+          chunks = split_text text
+          chunks.each {|chunk| puts "##chunk[#{idx}]\n#{chunk}\n##\n\n";}
+        end
+      rescue StandardError => e
+        @logger.error e.message
+        @logger.error e.backtrace
+      ensure
+        @logger.close
+      end
+    end
+
+    def test_run
+      begin
+        text = '<empty>'
+        open('/home/tony/Progetti/chirpmotd/fixture/codepage8859-15.txt', File::RDONLY) do |f|
+          text = f.readline
+        end
+        text.encode!(Encoding::UTF_8, {:invalid => :replace, :undef => :replace})
+        @logger.info "#{text.length}: #{text}"
+        chunks = split_text text
+        chunks.each {|chunk| puts "##\n#{chunk}\n##\n\n";}
+      rescue StandardError => e
+        @logger.error text.inspect
+        @logger.error e.message
+        @logger.error e.backtrace
+      ensure
+        @logger.close
+      end
+    end
+
     private
 
     def split_text(text)
