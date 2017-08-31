@@ -16,17 +16,28 @@ module ChirpQuote
     MAX_DIGIT = 5
 
     def initialize
-      log_filename = File.expand_path("#{__dir__}/../log/#{__FILE__}.log")
+      basename = self.class.name.split('::').last.downcase
+      log_filename = File.expand_path("/var/log/#{basename}.log")
       config_filename = File.expand_path("#{__dir__}/../config/config.json")
       @logger = Logger.new(log_filename, 10, 1_024_000)
-      @logger.progname = __FILE__
-      @logger.level = Logger::INFO
+      @logger.progname = basename
+      @logger.level = Logger::ERROR
 
       @logger.info "# version #{version}; ChirpQuote::VERSION #{ChirpQuote::VERSION}"
+      begin
+        unless Dir.exist? "/var/lib/#{basename}"
+            Dir.mkdir "/var/lib/#{basename}"
+        end
+      rescue StandardError => e
+        @logger.error e.message
+        @logger.error e.backtrace
+      end
 
       begin
         app_conf = JSON.load(File.open(config_filename))
+        @logger.debug "# URI #{app_conf['service_uri']}"
         service_uri = URI(app_conf['service_uri'])
+        @logger.debug "# URI #{service_uri}"
 
         @client = Twitter::REST::Client.new do |config|
           tw_conf = app_conf['twitter']
@@ -47,7 +58,7 @@ module ChirpQuote
       modules.delete self.class.name.split('::').last.to_sym
       @quotes = []
       modules.each do |c|
-        @quotes << ChirpQuote.const_get(c).new(uri, @logger)
+        @quotes << ChirpQuote.const_get(c).new(service_uri, @logger)
       end
     end
 
@@ -130,3 +141,4 @@ module ChirpQuote
     end
   end
 end
+
