@@ -1,6 +1,6 @@
 # encoding: utf-8
 module ChirpQuote
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   class ChirpMotd
     def version
