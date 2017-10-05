@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'chirp_motd'
-  s.version     = '0.1.1'
+  s.version     = '0.1.2'
   s.executables << 'chirpmotd'
   s.executables << 'cron_chirpmotd'
-  s.date        = '2017-08-31'
+  s.date        = '2017-10-05'
   s.summary     = 'Invia su twitter citazioni, a tempo oppure singole.'
   s.description = 'Una piccola gem per installare il servizio che permette di inviare tramite un account twitter delle citazioni. Le citazioni sono ottenute tramite un microservice ed inviate 1 al giorno per ciascun microservizio registrato.'
   s.authors     = ['TuxmAL']
