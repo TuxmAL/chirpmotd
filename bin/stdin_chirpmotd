@@ -6,6 +6,8 @@ require 'chirp_motd'
 
 ## start the app ##
 cm = ChirpQuote::ChirpMotd.new
-cm.stdin_run 2
-
+#cm.stdin_run 2
+q = ARGV.first.to_i
+puts "module #{q}"
+cm.stdin_run q
 
