@@ -27,7 +27,7 @@ module ChirpQuote
       @logger.info "# version #{version}; ChirpQuote::VERSION #{ChirpQuote::VERSION}"
       begin
         unless Dir.exist? "/var/lib/#{basename}"
-            Dir.mkdir "/var/lib/#{basename}"
+          Dir.mkdir "/var/lib/#{basename}"
         end
       rescue StandardError => e
         @logger.error e.message
