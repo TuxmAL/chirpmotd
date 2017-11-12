@@ -14,6 +14,7 @@ Dir[__dir__ + '/modules/*.rb'].each {|file| require_relative file}
 module ChirpQuote
   class ChirpMotd
     MAX_DIGIT = 5
+    TWEET_LEN = 280
 
     def initialize
       basename = self.class.name.split('::').last.downcase
@@ -158,7 +159,7 @@ module ChirpQuote
     private
 
     def split_text(text)
-      if text.length < 120
+      if text.length < TWEET_LEN - 5
         [text]
       else
         words = text.split
@@ -167,7 +168,7 @@ module ChirpQuote
         until words.empty?
           chunk = "#{num}/§"
           word = words.shift
-          while !word.nil? and ((chunk + word).length + 1 < 120)
+          while !word.nil? and ((chunk + word).length + 1 < (TWEET_LEN - 5))
             chunk += " #{word}"
             word = words.shift
           end
