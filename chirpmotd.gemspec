@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name        = 'chirp_motd'
-  s.version     = '0.1.2'
+  s.version     = '0.1.3'
   s.executables << 'chirpmotd'
   s.executables << 'cron_chirpmotd'
-  s.date        = '2017-10-05'
-  s.summary     = 'Invia su twitter citazioni, a tempo oppure singole.'
-  s.description = 'Una piccola gem per installare il servizio che permette di inviare tramite un account twitter delle citazioni. Le citazioni sono ottenute tramite un microservice ed inviate 1 al giorno per ciascun microservizio registrato.'
+  s.date        = '2017-11-12'
+  s.summary     = 'Invia su twitter citazioni, a tempo oppure singole. Ora fino a 280 caratteri.'
+  s.description = 'Una piccola gem per installare il servizio che permette di inviare tramite un account twitter delle citazioni. Le citazioni sono ottenute tramite moduli ed inviate 1 al giorno per ciascun modulo aggiunto.'
   s.authors     = ['TuxmAL']
   s.email       = 'tuxmal@gmail.com'
   s.files       = ["lib/chirp_motd.rb", "lib/version.rb", "config/config.json"]
