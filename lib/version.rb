@@ -1,11 +1,17 @@
-# encoding: utf-8
-module ChirpQuote
-  VERSION = '0.1.3'
+# frozen_string_literal: true
 
+# The ChirpQuote module is responsible for tweetting
+# some messages generate by modules that you can add
+# in the <tt>modules</tt> folder. 
+# Here we define the version number.
+module ChirpQuote
+  VERSION = '0.1.4'
+
+  # The main class ChirpMotd.
+  # Here we define the version method
   class ChirpMotd
     def version
-      return ChirpQuote::VERSION
+      ChirpQuote::VERSION
     end
-   end
+  end
 end
-
