@@ -1,6 +1,6 @@
 gem build chirpmotd.gemspec
-gem uninstall -v "0.1.2" chirp_motd
-gem install --local --user-install chirp_motd-0.1.3.gem
+gem uninstall -v "0.1.3" chirp_motd
+gem install --local --user-install chirp_motd-0.1.4.gem
 echo finalizing installation
 cp config/config.json.good /home/tony/.gem/ruby/2.4.0/gems/chirp_motd-0.1.3/config/config.json
 echo creating log file
