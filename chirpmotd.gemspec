@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
   s.requirements << 'yaml'
   s.requirements << 'json'
   s.requirements << 'rubygems'
-  s.requirements << 'net/http'
+  s.requirements << 'net-http'
 end
