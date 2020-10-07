@@ -1,3 +1,5 @@
+# frozen_String_literal: true
+
 require_relative 'lib/version.rb'
 Gem::Specification.new do |s|
   s.name        = 'chirp_motd'
