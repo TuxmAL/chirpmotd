@@ -22,4 +22,12 @@ Gem::Specification.new do |s|
   s.requirements << 'json'
   s.requirements << 'rubygems'
   s.requirements << 'net-http'
+
+  s.add_dependency('twitter', '~> 7.0')
+  s.add_dependency('logger', '~> 1.4')
+  s.add_dependency('yaml', '~> 0.1')
+  s.add_dependency('json', '~> 2.3')
+  s.add_dependency('net-http', '~> 0.1')
+  s.add_dependency('bundler', '~> 2.1')
+
 end
