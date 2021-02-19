@@ -123,6 +123,7 @@ module ChirpQuote
               f.write idx + 1
             end
           end
+          @quotes.each { |quote| puts quote.class.name}
           quote = @quotes[idx]
           text = quote.get
           @logger.info "#{text.length}: #{text}"
