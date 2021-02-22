@@ -2,7 +2,7 @@ module ChirpQuote
   class AdvertiseMe
     def initialize(service_uri, logger)
       # AdvertiseMe needs another URI (as string)
-      @uri = 'https://tuxmal.noip.me/'
+      @uri = 'https://tuxmal.net/'
       @logger = logger
     end
 
