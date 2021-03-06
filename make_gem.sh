@@ -1,3 +1,5 @@
+#!/bin/bash
+rvm use '2.6.5'
 gem build chirpmotd.gemspec
 gem uninstall chirp_motd
 #PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
