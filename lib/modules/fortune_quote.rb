@@ -1,3 +1,5 @@
+#frozen_string_literal: true
+
 module ChirpQuote
   class FortuneQuote
     def initialize(config, logger)
@@ -9,10 +11,10 @@ module ChirpQuote
         @logger.error e.backtrace
     end
 
-    def get()
+    def get
       begin
         fortune = `#{@fortune_cmd} -c -n 105 -s`
-        fortune.encode!(Encoding::UTF_8, {:invalid => :replace, :undef => :replace})
+        fortune.encode!(Encoding::UTF_8, invalid: :replace, undef: :replace)
         text = "#quotd #{fortune.sub(/^\((.*)\)\s*$/, '[\\1]->').gsub(/[%\t\n\r]/, ' ').squeeze(' ')}"
         @logger.info "#{self.class}: #{text}"
         return text
