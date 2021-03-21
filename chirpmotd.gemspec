@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.requirements << 'logger'
   s.requirements << 'yaml'
   s.requirements << 'json'
+  s.requirements << 'mqtt'
   s.requirements << 'rubygems'
   s.requirements << 'net-http'
 
@@ -28,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency('yaml', '~> 0.1')
   s.add_dependency('json', '~> 2.3')
   s.add_dependency('net-http', '~> 0.1')
+  s.add_dependency('mqtt', '~> 0.5.0')
   s.add_dependency('bundler', '~> 2.1')
 
 end
