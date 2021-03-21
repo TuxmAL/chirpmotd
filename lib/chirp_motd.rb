@@ -22,7 +22,7 @@ module ChirpQuote
       config_filename = File.expand_path("#{__dir__}/../config/config.json")
       @logger = Logger.new(log_filename, 10, 1_024_000)
       @logger.progname = basename
-      @logger.level = Logger::ERROR
+      @logger.level = Logger::INFO
 
       @logger.info "# version #{version}; ChirpQuote::VERSION #{ChirpQuote::VERSION}"
       begin
@@ -123,7 +123,7 @@ module ChirpQuote
               f.write idx + 1
             end
           end
-          @quotes.each { |quote| puts quote.class.name}
+          @quotes.each_with_index { |quote, idx| puts "#{idx}: #{quote.class.name}" }
           quote = @quotes[idx]
           text = quote.get
           @logger.info "#{text.length}: #{text}"
