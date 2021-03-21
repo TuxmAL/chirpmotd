@@ -2,11 +2,15 @@
 
 module ChirpQuote
   class DiceGenerator
-    def initialize(service_uri, logger)
+    def initialize(config, logger)
+      @logger = logger
       @sides = 6
       @dices = 2
-      @uri = service_uri + "lancia/#{@dices}?faces=#{@sides}"
-      @logger = logger
+      @uri = config['service_uri'].nil? ? '' : config['service_uri']
+      @uri = URI.join(@uri, "lancia/#{@dices}?faces=#{@sides}")
+      rescue => e
+        @logger.error e.message
+        @logger.error e.backtrace
     end
 
     def get

@@ -2,9 +2,13 @@
 
 module ChirpQuote
   class StoryGenerator
-    def initialize(service_uri, logger)
-      @uri = service_uri + 'racconta'
+    def initialize(config, logger)
       @logger = logger
+      @uri = config['service_uri'].nil? ? '' : config['service_uri']
+      @uri = URI.join(@uri, 'racconta')
+      rescue => e
+        @logger.error e.message
+        @logger.error e.backtrace
     end
 
     def get

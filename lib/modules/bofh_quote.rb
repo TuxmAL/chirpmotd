@@ -1,8 +1,12 @@
 module ChirpQuote
   class BofhQuote
-    def initialize(service_uri, logger)
-      @uri = service_uri + 'genera'
+    def initialize(config, logger)
       @logger = logger
+      @uri = config['service_uri'].nil? ? '' : config['service_uri']
+      @uri = URI.join(@uri, 'genera')
+      rescue => e
+        @logger.error e.message
+        @logger.error e.backtrace
     end
 
     def get

@@ -1,5 +1,35 @@
 {
-  "service_uri": "<URI service>",
+  "StoryGenerator":  {
+    "service_uri": "<URI service>"
+  },
+  "StorieGenerator":  {
+    "service_uri": "<URI service>"
+  },
+  "HackQuote":  {
+    "service_uri": "<URI service>"
+  },
+  "DoahQuote":  {
+    "service_uri": "<URI service>"
+  },
+  "DiceGenerator":  {
+    "service_uri": "<URI service>"
+  },
+  "BofhQuote":  {
+    "service_uri": "<URI service>"
+  },
+  "Bofh2Quote":  {
+    "service_uri": "<URI service>"
+  },
+  "AdvertiseMe":  {
+    "service_uri": "<URI service>"
+  },
+  "FortuneQuote": {
+    "fortune_path": "<fortune system path>"
+  },
+  "ItsMe":
+  {
+    "mqtt_uri": "<MQTT server URI>"
+  },
   "twitter": {
     "consumer_key": "<consumer key>",
     "consumer_secret": "<consumer secret>",

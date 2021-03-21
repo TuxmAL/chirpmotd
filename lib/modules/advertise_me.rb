@@ -1,9 +1,11 @@
 module ChirpQuote
   class AdvertiseMe
-    def initialize(service_uri, logger)
-      # AdvertiseMe needs another URI (as string)
-      @uri = 'https://tuxmal.net/'
+    def initialize(config, logger)
       @logger = logger
+      @uri = config['service_uri'].nil? ? 'https://tuxmal.net/' : config['service_uri']
+      rescue => e
+        @logger.error e.message
+        @logger.error e.backtrace
     end
 
     def get

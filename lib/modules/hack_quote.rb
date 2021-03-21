@@ -7,9 +7,13 @@
 module ChirpQuote
 
   class HackQuote
-    def initialize(service_uri, logger)
-      @uri = service_uri + 'cita'
+    def initialize(config, logger)
       @logger = logger
+      @uri = config['service_uri'].nil? ? '' : config['service_uri']
+      @uri = URI.join(@uri, 'cita')
+      rescue => e
+        @logger.error e.message
+        @logger.error e.backtrace
     end
 
     def get

@@ -33,13 +33,9 @@ module ChirpQuote
         @logger.error e.message
         @logger.error e.backtrace
       end
-
+      app_conf = nil
       begin
         app_conf = JSON.load(File.open(config_filename))
-        @logger.debug "# URI #{app_conf['service_uri']}"
-        service_uri = URI(app_conf['service_uri'])
-        @logger.debug "# URI #{service_uri}"
-
         @client = Twitter::REST::Client.new do |config|
           tw_conf = app_conf['twitter']
           config.consumer_key = tw_conf['consumer_key']
@@ -59,7 +55,7 @@ module ChirpQuote
       modules.delete self.class.name.split('::').last.to_sym
       @quotes = []
       modules.each do |c|
-        @quotes << ChirpQuote.const_get(c).new(service_uri, @logger)
+        @quotes << ChirpQuote.const_get(c).new(app_conf[c.to_s], @logger)
       end
     end
 
