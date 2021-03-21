@@ -5,7 +5,7 @@
 # in the <tt>modules</tt> folder. 
 # Here we define the version number.
 module ChirpQuote
-  VERSION = '0.1.5'
+  VERSION = '0.2.0'
 
   # The main class ChirpMotd.
   # Here we define the version method
