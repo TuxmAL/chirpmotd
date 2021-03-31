@@ -97,8 +97,7 @@ module ChirpQuote
             chunks = split_text text
             chunks.each {|chunk| @client.update(chunk)}
             f.rewind
-            idx += 1
-            f.write idx
+            f.write "#{idx + 1} "
           end
         end
       rescue StandardError => e
@@ -116,7 +115,7 @@ module ChirpQuote
             open('/var/lib/chirpmotd/chirpmotd.idx', File::CREAT|File::RDWR) do |f|
               idx = (f.read(MAX_DIGIT)).to_i % @quotes.length if idx.nil?
               f.rewind
-              f.write idx + 1
+              f.write "#{idx + 1} "
             end
           end
           @quotes.each_with_index { |quote, idx| puts "#{idx}: #{quote.class.name}" }
