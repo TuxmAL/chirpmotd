@@ -118,7 +118,7 @@ module ChirpQuote
               f.write "#{idx + 1} "
             end
           end
-          @quotes.each_with_index { |quote, idx| puts "#{idx}: #{quote.class.name}" }
+          @quotes.each_with_index { |quote, index| puts "#{index}: #{quote.class.name}" }
           quote = @quotes[idx]
           text = quote.get
           @logger.info "#{text.length}: #{text}"
