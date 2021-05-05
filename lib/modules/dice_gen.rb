@@ -13,11 +13,19 @@ module ChirpQuote
         @logger.error e.backtrace
     end
 
-    def get
+    def get(double_nuts = false)
       body_resp = Net::HTTP.get @uri
       result = JSON.parse body_resp
       @logger.info "#{self.class}: #{result}"
-      "#DiceRoll Let's roll #{@dices} #{@sides}-sided dice: #{fancy_graph(result['throw'])} (you got #{result['value']})"
+      unless double_nuts
+        ret_val = "#DiceRoll Let's roll #{@dices} #{@sides}-sided dice: #{fancy_graph(result['throw'])} (you got #{result['value']})"
+        if double_nuts?(result['throw'])
+          ret_val += "<br>Double nuts!<br>So... let's roll again<br>" + get(true)
+        end
+      else
+        ret_val = "#{fancy_graph(result['throw'])} (you got #{result['value']})"
+      end
+      return ret_val
     rescue StandardError => e
       @logger.error e.message
       @logger.error e.backtrace
@@ -44,6 +52,10 @@ module ChirpQuote
         end
       end
       msg.join(' ')
+    end
+
+    def double_nuts?(roll_results)
+      roll_results.size != 1 && roll_results.uniq.size == 1
     end
   end
 end
