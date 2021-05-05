@@ -8,24 +8,21 @@ module ChirpQuote
       @dices = 2
       @uri = config['service_uri'].nil? ? '' : config['service_uri']
       @uri = URI.join(@uri, "lancia/#{@dices}?faces=#{@sides}")
-      rescue => e
-        @logger.error e.message
-        @logger.error e.backtrace
+    rescue StandardError => e
+      @logger.error e.message
+      @logger.error e.backtrace
     end
 
     def get(double_nuts = false)
       body_resp = Net::HTTP.get @uri
       result = JSON.parse body_resp
       @logger.info "#{self.class}: #{result}"
-      unless double_nuts
-        ret_val = "#DiceRoll Let's roll #{@dices} #{@sides}-sided dice: #{fancy_graph(result['throw'])} (you got #{result['value']})"
-        if double_nuts?(result['throw'])
-          ret_val += "<br>Double nuts!<br>So... let's roll again<br>" + get(true)
-        end
+      if double_nuts
+        "#{fancy_graph(result['throw'])} (you got #{result['value']})"
       else
-        ret_val = "#{fancy_graph(result['throw'])} (you got #{result['value']})"
+        second_throw = "<br>Double nuts!<br>So... let's roll again<br>" + get(true) if double_nuts?(result['throw'])
+        "#DiceRoll Let's roll #{@dices} #{@sides}-sided dice: #{fancy_graph(result['throw'])} (you got #{result['value']})#{second_throw}"
       end
-      return ret_val
     rescue StandardError => e
       @logger.error e.message
       @logger.error e.backtrace
@@ -38,11 +35,7 @@ module ChirpQuote
       msg = roll_results.map do |roll_result|
         case @sides
         when 2
-          if roll_result == 1
-            "\u1F464 (head)"
-          else
-            "ξ (tail)"
-          end
+          roll_result == 1 ? "\u1F464 (head)" : 'ξ (tail)'
         when 6
           dice = "\u267f"
           roll_result.times { dice = dice.succ }
