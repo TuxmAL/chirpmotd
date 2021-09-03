@@ -20,7 +20,7 @@ module ChirpQuote
       if double_nuts
         "#{fancy_graph(result['throw'])} (you got #{result['value']})"
       else
-        second_throw = "<br>Double nuts!<br>So... let's roll again<br>" + get(true) if double_nuts?(result['throw'])
+        second_throw = "\nDouble nuts!\nSo... let's roll again\n" + get(true) if double_nuts?(result['throw'])
         "#DiceRoll Let's roll #{@dices} #{@sides}-sided dice: #{fancy_graph(result['throw'])} (you got #{result['value']})#{second_throw}"
       end
     rescue StandardError => e
