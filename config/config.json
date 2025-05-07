@@ -30,10 +30,8 @@
   {
     "mqtt_uri": "<MQTT server URI>"
   },
-  "twitter": {
-    "consumer_key": "<consumer key>",
-    "consumer_secret": "<consumer secret>",
-    "oauth_token": "<oauth token>",
-    "oauth_token_secret": "<oauth token secret>"
+  "mastodon": {
+    "base_url": "<instace URL hosting bot>",
+    "bearer_token": "<client token>"
   }
 }

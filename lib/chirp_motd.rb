@@ -6,7 +6,8 @@ require 'net/http'
 require 'json'
 require 'logger'
 require 'yaml'
-require 'twitter'
+require 'mastodon'
+
 
 require_relative 'version.rb'
 Dir[__dir__ + '/modules/*.rb'].each {|file| require_relative file}
@@ -14,7 +15,7 @@ Dir[__dir__ + '/modules/*.rb'].each {|file| require_relative file}
 module ChirpQuote
   class ChirpMotd
     MAX_DIGIT = 5
-    TWEET_LEN = 280
+    POST_LEN = 480
 
     def initialize
       basename = self.class.name.split('::').last.downcase
@@ -36,13 +37,15 @@ module ChirpQuote
       app_conf = nil
       begin
         app_conf = JSON.load(File.open(config_filename))
-        @client = Twitter::REST::Client.new do |config|
-          tw_conf = app_conf['twitter']
-          config.consumer_key = tw_conf['consumer_key']
-          config.consumer_secret = tw_conf['consumer_secret']
-          config.access_token = tw_conf['oauth_token']
-          config.access_token_secret = tw_conf['oauth_token_secret']
-        end
+        mastodon_conf = app_conf['mastodon']
+        @client = Mastodon::REST::Client.new(base_url: mastodon_conf['base_url'], bearer_token: mastodon_conf['bearer_token'])
+#        @client = Twitter::REST::Client.new do |config|
+#          tw_conf = app_conf['twitter']
+#          config.consumer_key = tw_conf['consumer_key']
+#          config.consumer_secret = tw_conf['consumer_secret']
+#          config.access_token = tw_conf['oauth_token']
+#          config.access_token_secret = tw_conf['oauth_token_secret']
+#         end
       rescue StandardError => e
         @logger.error e.message
         @logger.error e.backtrace
@@ -70,17 +73,18 @@ module ChirpQuote
             @quotes.push quote
             text = quote.get
             @logger.info "#{text.length}: #{text}"
-            chunks = split_text text
-            chunks.each {|chunk| @client.update(chunk)}
+            @client.create_status(text)
+            # chunks = split_text text
+            #chunks.each {|chunk| @client.create_status(chunk)}#, {language: 'EN', visibility: :public})}
           end
           # test mode start
           #        sleep 360 / @quotes.length # 12 hours * 60 minutes * 60 seconds / how many generator we have
           # test mode end
           sleep 86400 / @quotes.length # 12 hours * 60 minutes * 60 seconds / how many generator we have
         end
-      rescue StandardError => e
-        @logger.error e.message
-        @logger.error e.backtrace
+      # rescue StandardError => e
+        # @logger.error e.message
+        # @logger.error e.backtrace
       ensure
         @logger.close
       end
@@ -95,7 +99,7 @@ module ChirpQuote
             text = quote.get
             @logger.info "#{text.length}: #{text}"
             chunks = split_text text
-            chunks.each {|chunk| @client.update(chunk)}
+            chunks.each {|chunk| @client.create_status(chunk, language: 'EN', visibility: :public)}
             f.rewind
             f.write "#{idx + 1} "
           end
@@ -155,7 +159,7 @@ module ChirpQuote
     private
 
     def split_text(text)
-      if text.length < TWEET_LEN - 5
+      if text.length < POST_LEN - 5
         [text]
       else
         words = text.split
@@ -164,7 +168,7 @@ module ChirpQuote
         until words.empty?
           chunk = "#{num}/§"
           word = words.shift
-          while !word.nil? and ((chunk + word).length + 1 < (TWEET_LEN - 5))
+          while !word.nil? and ((chunk + word).length + 1 < (POST_LEN - 5))
             chunk += " #{word}"
             word = words.shift
           end

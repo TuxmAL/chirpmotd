@@ -16,14 +16,14 @@ Gem::Specification.new do |s|
   s.files      += Dir['bin/*']
   s.homepage    = 'http://rubygems.org/gems/chirpmotd'
   s.license     = 'GPL-3.0'
-  s.requirements << 'twitter'
+  s.required_ruby_version = '>= 3.1.0'
+  s.requirements << 'mastodon-api'
   s.requirements << 'logger'
   s.requirements << 'mqtt'
   s.requirements << 'rubygems'
   s.requirements << 'net-http'
-
-  s.add_dependency('twitter', '~> 7.0')
-  s.add_dependency('logger', '~> 1.4')
-  s.add_dependency('mqtt', '~> 0.5.0')
-  s.add_dependency('bundler', '~> 2.1')
+  s.add_dependency('mastodon-api', '~> 2.0')
+  s.add_dependency('logger', '~> 1.6')
+  s.add_dependency('mqtt', '~> 0.6.0')
+  s.add_dependency('bundler', '~> 2.6')
 end

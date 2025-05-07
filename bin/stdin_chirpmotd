@@ -1,8 +1,8 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 # encoding: utf-8
 
-require 'rubygems'
-require 'chirp_motd'
+# require 'rubygems'
+require_relative '../lib/chirp_motd'
 
 ## start the app ##
 cm = ChirpQuote::ChirpMotd.new
