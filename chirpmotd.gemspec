@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency('twitter', '~> 7.0')
   s.add_dependency('logger', '~> 1.4')
-  s.add_dependency('mqtt', '~> 0.5.0')
+  s.add_dependency('mqtt', '>= 0.5', '< 0.8')
   s.add_dependency('bundler', '~> 2.1')
 end
